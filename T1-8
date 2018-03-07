@@ -1,0 +1,252 @@
+#include <stdio.h>
+#include <conio.h>
+#define MAX_SIZE 100
+
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+int sum(int *pointer, int n);
+void printArray(int arr[], int size);
+void QuantityPosNegNull(int *arr, int size, int *countpos, int *countneg, int *countnull);
+void countEven(int *arr, int size, int *counteven);
+double * BigEl(double* arr, double arrSize);
+
+int main(int argc, char** argv) {
+	int task_num;
+	printf ("Enter the task number: \n");
+	scanf("%d", &task_num);
+	
+	if (task_num==1)
+	{
+		int array [100];	
+	    int i,n;
+	
+	
+	    printf("Vvedite chislo elementov massiva:\n");
+	    scanf("%d", &n);
+	    printf("Vvedite %d elementov massiva:\n", n);
+	    for(i=0;i<n;i++)
+	        scanf("%d",&array[i]);
+	
+	    printf("Summa elementov massiva ravna %d\n", sum(array, n));
+	}
+	else if (task_num==2)
+	{
+		int array [100];	
+	    int i, n;
+	    int *ptr;
+	
+	    ptr=&array[0];
+	    printf("Vvedite chislo elementov massiva:\n");
+	    scanf("%d", &n);
+	    printf("Vvedite %d elementov massiva:\n", n);
+	    for(i=0;i<n;i++){
+		    scanf("%d", ptr);
+		    ptr++;
+	    }
+	    ptr=&array[n-1];
+	    printf("Elementy massiva v obratnom poryadke:\n");
+	    for(i=n-1;i>=0;i--){
+		    printf("%d\n",*ptr);
+		    ptr--;
+	    }
+	}
+	else if (task_num==3)
+	{
+		int source_arr[MAX_SIZE], dest_arr[MAX_SIZE];
+	    int size, i;
+	
+	    int *source_ptr=source_arr;
+	    int *dest_ptr=dest_arr;
+	
+	    int *end_ptr;
+	
+	    printf("Vvedite razmer massiva:");
+	    scanf("%d", &size);
+	    printf("Vvedite elementy massiva:");
+	    for(i=0;i<size;i++){
+		    scanf("%d", (source_ptr+i));
+	    }
+	
+	    end_ptr=&source_arr[size-1];
+	
+	    printf("\n1 massiv do kopirovaniya: ");
+        printArray(source_arr, size);
+
+        printf("\n2 massiv do kopirovaniya: ");
+        printArray(dest_arr, size);
+    
+        while(source_ptr<=end_ptr)
+        {
+    	    *dest_ptr=*source_ptr;
+    	    source_ptr++;
+    	    dest_ptr++;
+     	}
+	    printf("\n\n1 massiv posle kopirovaniya: ");
+        printArray(source_arr, size);
+
+        printf("\n2 massiv posle kopirovaniya: ");
+        printArray(dest_arr, size);
+	}
+	else if (task_num==4)
+	{
+		int array [100];	
+	    int i, n;
+	    int *ptr;
+	
+	    ptr=&array[0];
+	    printf("Vvedite chislo elementov massiva:\n");
+	    scanf("%d", &n);
+	    printf("Vvedite %d elementov massiva:\n", n);
+	    for(i=0;i<n;i++){
+		    scanf("%d", ptr);
+		    ptr++;
+	    }
+	    ptr=&array[n-1];
+	    printf("Elementy massiva v obratnom poryadke:\n");
+	    for(i=n-1;i>=0;i--){
+		    printf("%d\n",*ptr);
+		    ptr--;
+	    }
+	}
+	else if (task_num==5)
+	{
+		int size, i;
+	    int arr[100];
+	    int countpos=0, countneg=0, countnull=0;
+	    int *pcountpos=&countpos;
+	    int *pcountneg=&countneg;
+	    int *pcountnull=&countnull;
+	
+	    printf("Vvedite razmer massiva:");
+	    scanf("%d", &size);
+	    printf("Vvedite elementy massiva:");
+	    for(i=0;i<size;i++){
+		    scanf("%d", &arr[i]);
+	    }
+	    int *parr=&arr[0];
+	    printf ("Kol-vo polozhitel'nyh, otricatel'nyh, nulevyh elementov ravno: ");
+	    QuantityPosNegNull(parr, size, pcountpos, pcountneg, pcountnull);
+	
+	}
+	else if (task_num==6)
+	{
+		int size, i;
+	    int arr[100];
+	    int counteven=0;
+	    int *pcounteven=&counteven;
+	
+	
+	    printf("Vvedite razmer massiva:");
+	    scanf("%d", &size);
+	    printf("Vvedite elementy massiva:");
+	    for(i=0;i<size;i++){
+		    scanf("%d", &arr[i]);
+	    }
+	    int *parr=&arr[0];
+	    printf ("Kol-vo chetnyh elementov massiva ravno: ");
+	    countEven(parr, size, pcounteven);
+	}
+	else if (task_num==7)
+	{
+		double myarr[10];
+        double * max_pos;
+        int i;
+        printf("Please insert 10 numbers to the array\n");
+        for (i = 0; i < 10; i++)
+        {
+            scanf("%lf", &myarr[i]);
+        }
+        printf("%f\n", *BigEl(myarr, 10));
+	}
+	else if (task_num==8)
+	{
+		int a[10][10],i,j,m;
+ 
+        printf("Enter order of square matrix: ");
+        scanf("%d",&m);
+        for(i=1;i<=m;i++)
+        {
+            for(j=1;j<=m;j++)
+            {
+                printf("Enter value of a[%d][%d]: ",i,j);
+                scanf("%d",&a[i][j]);
+            }
+        }
+        for(i=1;i<=m;i++)
+        {
+            for(j=1;j<=m;j++)
+            {
+                if(a[i][j]!=a[j][i])
+                {
+                    printf("\n\nMatrix is not symmetric");    
+                }
+            }
+        }
+        printf("\n\nMatrix is symmetric");  
+	}
+	return 0;
+}
+
+
+int sum(int *pointer, int n)
+{
+	int i;
+	int S=0;
+	for(i=0;i<n;i++)
+	{
+		S+=*(pointer+i);
+	}
+	
+	return S;
+}
+
+void printArray(int *arr, int size)
+{
+    int i;
+
+    for (i = 0; i < size; i++)
+    {
+        printf("%d, ", *(arr + i));
+    }
+}
+
+void QuantityPosNegNull(int *arr, int size, int *countpos, int *countneg, int *countnull)
+{
+	int i;	
+	
+	for(i=0;i<size;i++){
+		if(*(arr+i)>0)
+			(*countpos)++;			
+		if(*(arr+i)<0)
+		    (*countneg)++;
+		if(*(arr+i)==0)
+		    (*countnull)++;		
+	}
+	printf("%d %d %d", *countpos, *countneg, *countnull);	
+}
+
+void countEven(int *arr, int size, int *counteven)
+{
+	int i;	
+	
+	for(i=0;i<size;i++){
+		if(*(arr+i)%2==0)
+			(*counteven)++;			
+	}
+	printf("%d", *counteven);	
+}
+
+double * BigEl(double* arr, double arrSize)
+{
+    int i;
+    double maximum = arr[0], *max_pos = arr;
+
+    for (i = 1; i < arrSize; i++)
+    {
+        if (arr[i]>maximum)
+        {
+            maximum = arr[i];
+            max_pos = &arr[i];
+        }
+    }
+    return max_pos;
+}
